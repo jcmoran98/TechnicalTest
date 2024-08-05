@@ -20,7 +20,4 @@ SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/pfcti
 SPRING_DATASOURCE_USERNAME=pfcti_user
 ```
 # ¡IMPORTANTE!
-### El docker-compose crea la base de datos pero no ejecuta los queries de creación de tablas ni SP, 
-### por lo que se tiene que ejecutar manualmente uno por uno.
-### Ya que por alguna razón si se ejecutan todos de golpe generan un error.
-### El archivo de la base de datos se llama init.sql
+### El docker-compose crea la base de datos pero no ejecuta los queries de creación de tablas ni SP, por lo que se tiene que ejecutar manualmente uno por uno. Ya que por alguna razón si se ejecutan todos de golpe generan un error. El archivo de la base de datos se llama init.sql
