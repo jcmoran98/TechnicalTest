@@ -27,9 +27,14 @@ import com.pfcti.technicaltest.dtos.CustomerToUpdateDTO;
 import com.pfcti.technicaltest.entities.Customer;
 import com.pfcti.technicaltest.exceptions.DuplicateEntityException;
 import com.pfcti.technicaltest.exceptions.EntityNotFoundException;
+import com.pfcti.technicaltest.exceptions.models.ErrorResponseModel;
 import com.pfcti.technicaltest.services.CustomerService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -58,6 +63,10 @@ public class CustomerController {
 	 */
 	@PostMapping
 	@Operation(summary = "Create customer", description = "Create and retrieve customer")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Customer successfully created"),
+			@ApiResponse(responseCode = "404", description = "The customer id provided doesn't exist", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occurred within the server.", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))) 
+	})
 	public Optional<Customer> createCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
 
 		try {
@@ -72,7 +81,7 @@ public class CustomerController {
 		} catch (Exception e) {
 
 			System.out.println(e.getMessage());
-			throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, FATAL_ERROR_MESSAGE);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
 
@@ -87,6 +96,9 @@ public class CustomerController {
 	 */
 	@PutMapping("/{customerId}")
 	@Operation(summary = "Update customer by id", description = "Update and retrieve customer by id")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Customer successfully updated"),
+			@ApiResponse(responseCode = "404", description = "The customer id provided doesn't exist", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occurred within the server.", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class)) ) })
 	public Optional<Customer> updateCustomer(@PathVariable("customerId") String customerId,
 			@Valid @RequestBody CustomerToUpdateDTO customerToUpdateDTO) {
 
@@ -102,7 +114,7 @@ public class CustomerController {
 		} catch (Exception e) {
 
 			System.out.println(e.getMessage());
-			throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, FATAL_ERROR_MESSAGE);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
 	}
@@ -115,6 +127,9 @@ public class CustomerController {
 	 */
 	@DeleteMapping("/{customerId}")
 	@Operation(summary = "Delete customer by id", description = "Delete and retrieve customer by id")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Customer successfully deleted"),
+			@ApiResponse(responseCode = "404", description = "The customer id provided doesn't exist", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occurred within the server.", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))) })
 	public Optional<Customer> deleteCustomer(@PathVariable("customerId") String customerId) {
 
 		try {
@@ -129,7 +144,7 @@ public class CustomerController {
 		} catch (Exception e) {
 
 			System.out.println(e.getMessage());
-			throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, FATAL_ERROR_MESSAGE);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
 	}
@@ -142,10 +157,13 @@ public class CustomerController {
 	 */
 	@GetMapping("/{customerId}")
 	@Operation(summary = "Get customer by id", description = "Retrieve customer details by id")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Customer successfully returned"),
+			@ApiResponse(responseCode = "404", description = "The customer id provided doesn't exist", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occurred within the server.", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))) })
 	public Optional<Customer> getOneCustomerById(@PathVariable("customerId") String customerId) {
 
 		try {
-			
+
 			return customerService.findCustomerById(customerId);
 
 		} catch (EntityNotFoundException e) {
@@ -156,11 +174,10 @@ public class CustomerController {
 		} catch (Exception e) {
 
 			System.out.println(e.getMessage());
-			throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, FATAL_ERROR_MESSAGE);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
 	}
-
 
 	/**
 	 * GET method that get all customer with order filters
@@ -172,7 +189,10 @@ public class CustomerController {
 	 */
 	@GetMapping
 	@Operation(summary = "Get all customers", description = "Retrieve all customers with order params")
-	public List<Customer> getAllCustomer(@RequestParam(value = "sortByIdAsc", defaultValue = "false") boolean sortByIdAsc,
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Customer successfully returned all"),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occurred within the server.", content = @Content(schema = @Schema(implementation = ErrorResponseModel.class))) })
+	public List<Customer> getAllCustomer(
+			@RequestParam(value = "sortByIdAsc", defaultValue = "false") boolean sortByIdAsc,
 			@RequestParam(value = "sortByNameAsc", defaultValue = "false") boolean sortByNameAsc,
 			@RequestParam(value = "sortByBirthdateDesc", defaultValue = "false") boolean sortByBirthdateDesc) {
 
@@ -183,13 +203,14 @@ public class CustomerController {
 		} catch (Exception e) {
 
 			System.out.println(e.getMessage());
-			throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, FATAL_ERROR_MESSAGE);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
 	}
 
 	/**
-	 * Method that handle the MethodArgumentNotValidException of the @Valid annotation
+	 * Method that handle the MethodArgumentNotValidException of the @Valid
+	 * annotation
 	 * 
 	 * @param ex
 	 * @return Map<String, String> Map with the information of error in validations

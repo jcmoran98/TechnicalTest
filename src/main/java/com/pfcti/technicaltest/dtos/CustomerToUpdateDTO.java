@@ -2,7 +2,6 @@ package com.pfcti.technicaltest.dtos;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
