@@ -2,7 +2,7 @@
 
 
 
-### Para montar el docker solo se necesita construir el proyecto y ejecutar el siguiente comando en una terminal en la carpeta raíz del proyecto
+### Para montar el docker solo se necesita construir y ejecutar el siguiente comando en una terminal en la carpeta raíz del proyecto
 ```
 docker-compose up --build -d
 ```
