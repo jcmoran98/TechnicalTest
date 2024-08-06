@@ -12,16 +12,6 @@
 docker-compose up --build -d
 ```
 
-### Para acceder a la base de datos por medio de un administrador como DBeaver o DbVisualizer los datos de acceso son:
-```
-user: root
-password: pfctiuserpassword
-port: 3306
-DBName: pfcti
-```
-# ¡IMPORTANTE!
-### El docker-compose crea la base de datos pero no ejecuta los queries de creación de tablas ni SP, por lo que se tiene que ejecutar manualmente uno por uno. Ya que por alguna razón si se ejecutan todos de golpe generan un error. El archivo de la base de datos se llama init.sql
-
 ### El archivo llamado Prueba técnica.postman_collection contiene la colección de postman. La url del swagger para acceder a toda la documentación es en cualquiera de estos dos links:
 ```
 http://localhost:5000/swagger-ui/index.html
@@ -35,3 +25,13 @@ SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/pfcti
 SPRING_DATASOURCE_USERNAME=pfcti_user
 ```
 
+### Para acceder a la base de datos por medio de un administrador como DBeaver o DbVisualizer los datos de acceso son:
+```
+user: root
+password: pfctiuserpassword
+port: 3306
+DBName: pfcti
+```
+
+# ¡IMPORTANTE!
+### El docker-compose crea la base de datos pero no ejecuta los queries de creación de tablas ni SP, por lo que se tiene que ejecutar manualmente uno por uno. Ya que por alguna razón si se ejecutan todos de golpe generan un error. El archivo de la base de datos se llama init.sql
