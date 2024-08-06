@@ -3,8 +3,10 @@ package com.pfcti.technicaltest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -14,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 
 import com.pfcti.technicaltest.dtos.CustomerToUpdateDTO;
 import com.pfcti.technicaltest.entities.Customer;
@@ -61,6 +66,23 @@ public class HttpRequestCustomerTest {
 	}
 
 	/**
+	 * Test responsible for retrieving all customer
+	 */
+	@Test
+	@Order(2)
+	void getAllCustomerTest() {
+
+		ResponseEntity<List<Customer>> responseEntity = restTemplate.exchange("http://localhost:" + port + "/customers",
+				HttpMethod.GET, null, new ParameterizedTypeReference<List<Customer>>() {
+				});
+
+		List<Customer> customers = responseEntity.getBody();
+
+		assertTrue(customers.size() > 0);
+
+	}
+
+	/**
 	 * Test responsible for update the customer's attributes
 	 */
 	@Test
@@ -98,11 +120,10 @@ public class HttpRequestCustomerTest {
 		String id = "0";
 
 		restTemplate.delete("http://localhost:" + port + "/customers/" + id);
-		
+
 		Customer customer = restTemplate.getForObject("http://localhost:" + port + "/customers/" + id, Customer.class);
 
 		assertNull(customer.getId());
 	}
-
 
 }
