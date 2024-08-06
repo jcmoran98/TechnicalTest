@@ -6,6 +6,14 @@
 ```
 docker-compose up --build -d
 ```
+
+### Para acceder a la base de datos por medio de un administrador como DBeaver o DbVisualizer los datos de acceso son:
+```
+user: root
+password: pfctiuserpassword
+port: 3306
+DBName: pfcti
+```
 ### La url del swagger para acceder a toda la documentación es en cualquiera de estos dos links:
 ```
 http://localhost:5000/swagger-ui/index.html
