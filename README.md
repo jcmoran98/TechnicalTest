@@ -14,7 +14,7 @@ password: pfctiuserpassword
 port: 3306
 DBName: pfcti
 ```
-### La url del swagger para acceder a toda la documentación es en cualquiera de estos dos links:
+### El archivo llamado Prueba técnica.postman_collection contiene la colección de postman. La url del swagger para acceder a toda la documentación es en cualquiera de estos dos links:
 ```
 http://localhost:5000/swagger-ui/index.html
 http://localhost:5000/swagger
