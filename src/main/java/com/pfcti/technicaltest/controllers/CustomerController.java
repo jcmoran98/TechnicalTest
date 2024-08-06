@@ -37,6 +37,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Controller class to management the customer REST
@@ -45,6 +46,7 @@ import jakarta.validation.Valid;
  * @author Jose Chavez
  * @version 0.0.1
  */
+@Slf4j
 @RestController
 @RequestMapping("/customers")
 @Tag(name = "Customer API")
@@ -75,12 +77,12 @@ public class CustomerController {
 
 		} catch (DuplicateEntityException e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
@@ -108,12 +110,12 @@ public class CustomerController {
 
 		} catch (EntityNotFoundException e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
@@ -138,12 +140,12 @@ public class CustomerController {
 
 		} catch (EntityNotFoundException e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
@@ -168,12 +170,12 @@ public class CustomerController {
 
 		} catch (EntityNotFoundException e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
@@ -202,7 +204,7 @@ public class CustomerController {
 
 		} catch (Exception e) {
 
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, FATAL_ERROR_MESSAGE);
 
 		}
